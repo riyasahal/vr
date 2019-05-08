@@ -30,10 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() != null) {
-            finish();
-            startActivity(new Intent(getApplicationContext(), data_collection.class));
-        }
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            finish();
+//            startActivity(new Intent(getApplicationContext(), data_collection.class));
+//        }
 
         email = (EditText) findViewById(R.id.emailRegister);
         pass1 = (EditText) findViewById(R.id.password1);
@@ -79,16 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
                             user.updateProfile(profileChangeRequest);
                             Toast.makeText(RegisterActivity.this, "Signed Up successfully!", Toast.LENGTH_SHORT).show();
                             finish();
-                            startActivity(new Intent(getApplicationContext(), data_collection.class));
-
-
+                            startActivity(new Intent(getApplicationContext(), LogInActivity.class));
                         } else {
                             Log.d("Error in registering ", task.getException().getMessage());
                             Toast.makeText(RegisterActivity.this, "Sign Up failed, please try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-
     }
 }

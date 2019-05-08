@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -34,7 +35,12 @@ public class LogInActivity extends AppCompatActivity {
         signUp = (Button)findViewById(R.id.signUpButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser()!=null)
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user!=null && user.getEmail().startsWith("doc"))
+        {
+            startActivity(new Intent(getApplicationContext(), DoctorActivity.class));
+        }
+        else if(user!=null)
         {
             startActivity(new Intent(getApplicationContext(), data_collection.class));
         }
@@ -56,7 +62,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void userLogin() {
-        String emailStr = email.getText().toString().trim();
+        final String emailStr = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
         if (TextUtils.isEmpty(emailStr)) {
             Toast.makeText(this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -72,12 +78,15 @@ public class LogInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            startActivity(new Intent(getApplicationContext(), data_collection.class));
+                            if(emailStr.startsWith("doc"))
+                                startActivity(new Intent(getApplicationContext(), DoctorActivity.class));
+                            else
+                                startActivity(new Intent(getApplicationContext(), data_collection.class));
                         }
                         else
                         {
                             Log.d("Error in logging in ", task.getException().getMessage());
-                            Toast.makeText(LogInActivity.this, "Sign Up failed, please try again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, "Log In failed, please try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

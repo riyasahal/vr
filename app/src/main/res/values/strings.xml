@@ -21,4 +21,16 @@
         <item>Average</item>
         <item>Bad</item>
     </string-array>
+    <string-array name="range">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="religion">
+    <item>Hinduism</item>
+    <item>Buddhism</item>
+    <item>Christianity</item>
+    </string-array>
 </resources>
